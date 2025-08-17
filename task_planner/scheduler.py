@@ -18,17 +18,26 @@ def choose_candidates(
     stats: dict[str, PlayerStats],
     task_name: str,
     is_drive: bool,
+    preferences: dict[str, dict[str, int]],
 ) -> list[str]:
-    def score(p: str) -> tuple[float, int, int, float]:
+    def score(p: str) -> tuple[float, int, int, int, float]:
         ps = stats[p]
+        pref = preferences[p].get(
+            task_name, 2
+        )  # 0=kan niet, 1=liever niet, 2=neutraal, 3=graag
         return (
-            ps.km if is_drive else 0.0,
-            ps.per_task[task_name],
-            ps.total_tasks,
-            random.random(),
+            ps.km if is_drive else 0.0,  # minder km eerst
+            ps.per_task[task_name],  # minder vaak die taak eerst
+            ps.total_tasks,  # minder totaal eerst
+            -pref,  # hogere voorkeur beter -> daarom negatief
+            random.random(),  # random tie-break
         )
 
-    eligible = [p for p in players if p not in already]
+    eligible = [
+        p
+        for p in players
+        if p not in already and preferences[p].get(task_name, 2) > 0
+    ]
     if AVOID_CONSECUTIVE:
         non_consec = [
             p
@@ -47,6 +56,7 @@ def assign_for_week(
     tasks_for_week: list[tuple[str, int]],
     stats: dict[str, PlayerStats],
     distance_km_single: float,
+    preferences: dict[str, dict[str, int]],
 ) -> dict[str, list[str]]:
     week_assignment: dict[str, list[str]] = {t: [] for t, _ in tasks_for_week}
     already: set[str] = set()
@@ -55,11 +65,17 @@ def assign_for_week(
         is_drive = task_name.casefold() == "rijden"
         for _ in range(count):
             candidates = choose_candidates(
-                players, week_index, already, stats, task_name, is_drive
+                players,
+                week_index,
+                already,
+                stats,
+                task_name,
+                is_drive,
+                preferences,
             )
             if not candidates:
                 raise RuntimeError(
-                    "Onvoldoende spelers om taken toe te wijzen."
+                    f"Geen geschikte speler voor taak: {task_name}"
                 )
 
             chosen = next(
@@ -114,12 +130,21 @@ def build_schedule(
             distances_df["club"], distances_df["afstand_km"], strict=True
         )
     }
+
     tasks = [
         (str(row["taak"]), str(row["scope"]), int(row["aantal"]))
         for _, row in tasks_df.iterrows()
     ]
     task_names = [t[0] for t in tasks]
     stats = {p: PlayerStats.empty(task_names) for p in players}
+
+    preferences: dict[str, dict[str, int]] = {
+        row["displaynaam"]: {
+            task: int(row.get(task, 2))  # standaard neutraal = 2
+            for task in task_names
+        }
+        for _, row in players_df.iterrows()
+    }
 
     out_rows: list[dict[str, str]] = []
     for idx, row in matches_df.iterrows():
@@ -138,7 +163,12 @@ def build_schedule(
 
         distance_single = dmap.get(tegen, 0.0)
         week_assignment = assign_for_week(
-            players, to_int(idx), tasks_for_week, stats, distance_single
+            players,
+            to_int(idx),
+            tasks_for_week,
+            stats,
+            distance_single,
+            preferences,
         )
 
         base: dict[str, str] = {

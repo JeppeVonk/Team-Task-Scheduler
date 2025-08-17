@@ -15,7 +15,7 @@ Speciaal gemaakt voor het HMHC Saxenburg Heren 1 hockeyteam, maar bruikbaar voor
 - Configuratie via CSV-bestanden:
   - `taken.csv` → takenlijst, scope, aantal personen.
   - `wedstrijden.csv` → wedstrijdschema.
-  - `spelers.csv` → spelersnamen en weergavenamen.
+  - `spelers.csv` → spelersnamen, weergavenamen en taakvoorkeuren.
   - `afstanden.csv` → enkele reis kilometers naar clubs.
 
 ## 📂 Projectstructuur

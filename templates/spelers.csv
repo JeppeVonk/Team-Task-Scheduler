@@ -1,9 +1,9 @@
-naam,displaynaam
-Jan Jansen,Jan
-Piet Pietersen,Piet
-Klaas Klaassen,Klaas
-Henk Hendriks,Henk
-Sjoerd Sjoerdsma,Sjoerd
-Martijn Martens,Martijn
-Rick Rikkers,Rick
-Bram Brams,Bram
+naam,displaynaam,Materialen,Hesjes,Rijden,Fluiten,Bar
+Jan Jansen,Jan,2,3,0,1,0
+Piet Pietersen,Piet,1,0,3,1,2
+Klaas Klaassen,Klaas,2,2,2,2,2
+Henk Hendriks,Henk,1,2,2,0,0
+Sjoerd Sjoerdsma,Sjoerd,1,3,0,2,2
+Martijn Martens,Martijn,3,0,1,2,2
+Rick Rikkers,Rick,3,0,3,0,0
+Bram Brams,Bram,0,0,3,3,2
