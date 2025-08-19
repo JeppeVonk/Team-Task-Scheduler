@@ -58,6 +58,13 @@ ruff = "^0.11.8"
 commitizen = "^4.6.0"
 pre-commit = "^4.2.0"
 
+[tool.poetry.group.test]
+optional = true
+
+[tool.poetry.group.test.dependencies]
+pytest = "^8.3.5"
+pytest-cov = "^6.1.1"
+
 [tool.commitizen]
 name = "cz_conventional_commits"
 version_provider = "pep621"
@@ -75,7 +82,7 @@ namespace_packages = true
 show_error_code_links = true
 pretty = true
 explicit_package_bases = true
-mypy_path = "src"
+mypy_path = "task_planner"
 
 [tool.black]
 line-length = 80
@@ -100,7 +107,8 @@ exclude = '''
 line-length = 80
 target-version = "py313"
 src = [
-    "task_planner"
+    "task_planner",
+    "tests"
 ]
 extend-exclude = [
     ".git",
@@ -121,4 +129,21 @@ extend-select = [
 ]
 ignore = [
     "E501"  # Line length handled by Black
+]
+
+[tool.pytest.ini_options]
+minversion = "8.0"
+addopts = "-ra --strict-markers --tb=short --cov=task_planner --cov-report term-missing --cov-report html:htmlcov"
+testpaths = [
+    "tests"
+]
+python_files = [
+    "test_*.py",
+    "*_test.py"
+]
+python_classes = [
+    "Test*"
+]
+python_functions = [
+    "test_*"
 ]
