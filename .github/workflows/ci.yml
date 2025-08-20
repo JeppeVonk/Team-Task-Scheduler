@@ -1,0 +1,79 @@
+name: Continuous Integration
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+env:
+  PYTHON_VERSION: "3.13"
+  POETRY_VERSION: "2.1.3"
+  VENV_PATH: ".venv"
+
+jobs:
+  test:
+    name:  Type Check, Lint, Format, and Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        id: setup-python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      # TODO: Optional: Cache Poetry installation (~10s saved on average)
+      #       Example: https://github.com/snok/install-poetry#caching-the-poetry-installation
+      - name: Install Poetry
+        uses: abatilo/actions-poetry@v4
+        with:
+          poetry-version: ${{ env.POETRY_VERSION }}
+
+      - name: Set Poetry to use in-project virtualenv (.venv folder)
+        run: |
+          poetry config virtualenvs.create true --local
+          poetry config virtualenvs.in-project true --local
+
+      - name: Cache virtual environment
+        id: cached-deps
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.VENV_PATH }}
+          key: >-
+            ${{ runner.os }}-venv-${{
+              steps.setup-python.outputs.python-version
+            }}-${{ hashFiles('**/poetry.lock') }}
+          restore-keys: >-
+            ${{ runner.os }}-venv-${{
+              steps.setup-python.outputs.python-version
+            }}-
+
+      - name: Install dependencies
+        if: steps.cached-deps.outputs.cache-hit != 'true'
+        run: poetry install --with dev,test
+
+      # TODO: Might want to run Black, Ruff & Mypy separately instead of using pre-commit
+      # TODO: Might want to cache pre-commit
+      - name: Run pre-commit hooks
+        run: poetry run pre-commit run --all-files --show-diff-on-failure --color=always
+
+      - name: Run tests with coverage
+        run: poetry run pytest
+
+      - name: Upload coverage report (HTML)
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-html
+          path: htmlcov
+
+      - name: Upload pytest cache
+        uses: actions/upload-artifact@v4
+        with:
+          name: pytest-cache
+          path: .pytest_cache
