@@ -1,0 +1,65 @@
+{
+    // Apply settings specifically to Python files
+    "[python]": {
+        // Format files on save using Black
+        "editor.formatOnSave": true,
+
+        // Trigger code actions on save for linting and organizing imports
+        // See: https://code.visualstudio.com/docs/python/formatting
+        "editor.codeActionsOnSave": {
+            "source.fixAll.pylance": "explicit", // Pylance quick fixes (optional)
+            "source.fixAll.ruff": "explicit", // Ruff lint fixes
+            "source.organizeImports.ruff": "explicit" // Ruff import sorting
+        },
+
+        // Use Black extension as the default formatter for Python
+        // See: https://marketplace.visualstudio.com/items?itemName=ms-python.black-formatter
+        "editor.defaultFormatter": "ms-python.black-formatter",
+    },
+
+    // Enable strict type checking via Pylance
+    // See: https://github.com/microsoft/pyright/blob/main/docs/configuration.md#type-check-diagnostics-settings
+    "python.analysis.typeCheckingMode": "strict",
+
+    // Enable pytest support for the Python extension
+    // See: https://code.visualstudio.com/docs/python/testing
+    "python.testing.pytestEnabled": true,
+
+    // (Optional) Enable experimental pytest support in the analysis engine
+    "python.analysis.enablePytestSupport": true,
+
+    // Use your pyproject.toml as the config for the Black formatter extension
+    "black-formatter.args": ["--config", "pyproject.toml"],
+
+    // Point Ruff to your config file
+    // See: https://docs.astral.sh/ruff/editors/settings/#configuration
+    "ruff.configuration": "pyproject.toml",
+
+    // https://github.com/wayou/vscode-todo-highlight/blob/master/src/util.js
+    "todohighlight.keywords": [
+        {
+            "text": "TODO:",
+            "color": "#fff",
+            "backgroundColor": "#ffbd2a",
+            "overviewRulerColor": "rgba(255,189,42,0.8)"
+        },
+        {
+            "text": "FIXME:",
+            "color": "#fff",
+            "backgroundColor": "#f06292",
+            "overviewRulerColor": "rgba(240,98,146,0.8)"
+        },
+        {
+            "text": "NOTE:",
+            "color": "#fff",
+            "backgroundColor": "#2196f3",
+            "overviewRulerColor": "rgba(33,150,243,0.8)"
+        },
+        {
+            "text": "pyright:",
+            "color": "#fff",
+            "backgroundColor": "#4caf50",
+            "overviewRulerColor": "rgba(76,175,80,0.8)"
+        },
+    ],
+}
