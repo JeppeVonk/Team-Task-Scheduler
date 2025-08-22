@@ -1,3 +1,9 @@
+## v0.2.3 (2025-08-22)
+
+### Fix
+
+- **ci**: set poetry config before selecting python version
+
 ## v0.2.2 (2025-08-22)
 
 ### Fix
