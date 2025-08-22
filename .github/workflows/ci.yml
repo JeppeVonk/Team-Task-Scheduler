@@ -30,16 +30,24 @@ jobs:
 
       # TODO: Optional: Cache Poetry installation (~10s saved on average)
       #       Example: https://github.com/snok/install-poetry#caching-the-poetry-installation
+      - name: Load cached Poetry installation
+        id: cached-poetry
+        uses: actions/cache@v4
+        with:
+          path: ~/.local  # the path depends on the OS
+          key: poetry-0  # increment to reset cache
+
       - name: Install Poetry
-        run: pipx install poetry==${{ env.POETRY_VERSION }}
+        if: steps.cached-poetry.outputs.cache-hit != 'true'
+        uses: snok/install-poetry@v1
 
       - name: Set Poetry to use in-project virtualenv (.venv folder)
         run: |
           poetry config virtualenvs.create true --local
           poetry config virtualenvs.in-project true --local
 
-      - name: Tell Poetry to use the runner's Python
-        run: poetry env use "${{ steps.setup-python.outputs.python-path }}"
+      # - name: Tell Poetry to use the runner's Python
+      #   run: poetry env use "${{ steps.setup-python.outputs.python-path }}"
 
       - name: Cache virtual environment
         id: cached-deps
