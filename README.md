@@ -69,25 +69,73 @@ Wij raden **Conda** aan, omdat dat het eenvoudigst is en overal werkt.
 
 1. **Installeer Conda**
 
-   - Download: [Miniconda](https://www.anaconda.com/docs/getting-started/miniconda)
+   - Download: [Miniconda](https://www.anaconda.com/docs/getting-started/miniconda)  
    - Volg de installatiehandleiding voor jouw computer.
 
-2. **Maak een nieuwe omgeving voor dit project**  
+2. **Haal het project binnen**
+
+   - Als je het project als `.zip` hebt gedownload:
+     - Pak het bestand uit (rechtermuisknop → "Alles uitpakken").
+     - Je krijgt een map zoals `Team-Task-Scheduler/`.
+
+   - Als je **Git** hebt geïnstalleerd:
+
+     ```bash
+     git clone https://github.com/jouw-gebruikersnaam/Team-Task-Scheduler.git
+     ```
+
+     Ook dan krijg je een map `Team-Task-Scheduler/`.
+
+   👉 Onthoud waar deze map staat, want je moet er in de volgende stappen naartoe gaan.
+
+3. **Maak een nieuwe omgeving voor dit project**  
    Open een terminal/Anaconda Prompt en voer uit:
 
    ```bash
    conda create -n team-tasks python=3.13
+   ```
+
+   ```bash
    conda activate team-tasks
    ```
 
-3. **Installeer de benodigde hulpmiddelen**
+4. **Installeer de benodigde hulpmiddelen**
 
    ```bash
    conda install conda-forge::pipx
+   ```
+
+   ```bash
    pipx install poetry
    ```
 
-4. **Installeer het project zelf**
+   <!-- TODO: Figure out why poetry is not always added to the PATH, thus causing a fail during `poetry install` -->
+
+5. **Installeer het project zelf**  
+   Ga in de terminal eerst naar de projectmap:
+
+   ```bash
+   cd pad/naar/Team-Task-Scheduler
+   ```
+
+   🔎 **Tip:** twijfel je of je in de juiste map zit?  
+   Typ in de terminal:
+
+   - macOS/Linux:
+
+     ```bash
+     ls
+     ```
+
+   - Windows:
+
+     ```bash
+     dir
+     ```
+
+   Je zou o.a. `README.md`, `task_planner/` en `templates/` moeten zien, net als in het voorbeeld hierboven.
+
+   Voer daarna uit:
 
    ```bash
    poetry install
@@ -111,7 +159,30 @@ Wij raden **Conda** aan, omdat dat het eenvoudigst is en overal werkt.
 
 2. Vul de bestanden in met jullie teaminformatie (zie hieronder voor uitleg).
 
-3. Draai het programma vanuit die map:
+3. **Ga naar je werkmap en activeer Conda**  
+   - Open **Anaconda Prompt** (Windows) of een terminal (Mac/Linux).
+   - Navigeer naar de map waar je de bestanden hebt gezet, bijvoorbeeld:
+
+     ```bash
+     cd pad/naar/mijn-team/
+     ```
+
+   - Controleer of je in de juiste map zit:
+
+     ```bash
+     ls   # macOS/Linux
+     dir  # Windows
+     ```
+
+     Je zou hier de bestanden `taken.csv`, `spelers.csv`, `wedstrijden.csv`, `afstanden.csv` moeten zien.
+
+   - Activeer de Conda-omgeving:
+
+     ```bash
+     conda activate team-tasks
+     ```
+
+4. **Draai het programma**  
 
    ```bash
    poetry run task_planner \
@@ -122,7 +193,7 @@ Wij raden **Conda** aan, omdat dat het eenvoudigst is en overal werkt.
      --uitvoer schema.xlsx
    ```
 
-4. Open **`schema.xlsx`** in Excel → daarin staan:
+5. Open **`schema.xlsx`** in Excel → daarin staan:
    - **Schema-tabblad** → alle wedstrijden en wie welke taak doet
    - **Statistiek-tabblad** → overzicht per speler en kilometerverdeling
 
