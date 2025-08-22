@@ -31,9 +31,7 @@ jobs:
       # TODO: Optional: Cache Poetry installation (~10s saved on average)
       #       Example: https://github.com/snok/install-poetry#caching-the-poetry-installation
       - name: Install Poetry
-        uses: abatilo/actions-poetry@v4
-        with:
-          poetry-version: ${{ env.POETRY_VERSION }}
+        run: pipx install poetry==${{ env.POETRY_VERSION }}
 
       - name: Set Poetry to use in-project virtualenv (.venv folder)
         run: |
