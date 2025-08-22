@@ -1,3 +1,9 @@
+## v0.2.4 (2025-08-22)
+
+### Fix
+
+- **ci**: install Poetry with runner's Python instead of action
+
 ## v0.2.3 (2025-08-22)
 
 ### Fix
