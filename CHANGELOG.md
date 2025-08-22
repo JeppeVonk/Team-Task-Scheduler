@@ -1,3 +1,9 @@
+## v0.2.2 (2025-08-22)
+
+### Fix
+
+- **ci**: ensure poetry uses correct python version from setup-python
+
 ## v0.2.1 (2025-08-20)
 
 ### Fix
