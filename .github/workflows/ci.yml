@@ -35,13 +35,13 @@ jobs:
         with:
           poetry-version: ${{ env.POETRY_VERSION }}
 
-      - name: Tell Poetry to use the runner's Python
-        run: poetry env use "${{ steps.setup-python.outputs.python-path }}"
-
       - name: Set Poetry to use in-project virtualenv (.venv folder)
         run: |
           poetry config virtualenvs.create true --local
           poetry config virtualenvs.in-project true --local
+
+      - name: Tell Poetry to use the runner's Python
+        run: poetry env use "${{ steps.setup-python.outputs.python-path }}"
 
       - name: Cache virtual environment
         id: cached-deps
