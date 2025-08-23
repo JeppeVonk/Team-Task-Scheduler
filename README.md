@@ -166,13 +166,12 @@ poetry install
    conda activate team-tasks
    ```
 
-   > [!TIP]
-   > Controleer dat je bestanden `taken.csv`, `spelers.csv`, `wedstrijden.csv`, `afstanden.csv` in de map staan.
-   >
-   > ```bash
-   > ls   # macOS/Linux
-   > dir  # Windows
-   > ```
+   Controleer dat je bestanden `taken.csv`, `spelers.csv`, `wedstrijden.csv`, `afstanden.csv` in de map staan:
+
+   ```bash
+   ls   # macOS/Linux
+   dir  # Windows
+   ```
 
 4. Draai het programma:
 
@@ -356,8 +355,7 @@ Ga nu verder met de volgende stap in [⚙️ Installatie (eenmalig instellen)](#
    pipx list
    ```
 
-   > [!NOTE]
-   > Zoek de regel: `apps are exposed on your PATH at C:\Users\JOUWNAAM\.local\bin`
+   Zoek de regel: `apps are exposed on your PATH at C:\Users\JOUWNAAM\.local\bin`
 
 2. Voeg dit pad toe aan je PATH via **Instellingen → Systeem → Info → Geavanceerde systeeminstellingen → Geavanceerd → Omgevingsvariabelen → Gebruikersvariabelen → Path → Bewerken → Nieuw**.
 3. Sluit terminal/computer volledig af en open opnieuw, test met:
