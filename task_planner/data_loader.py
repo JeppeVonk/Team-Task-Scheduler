@@ -13,7 +13,7 @@ def load_csv(path: str) -> pd.DataFrame:
         sys.exit(f"Bestand niet gevonden: {path}")
 
 
-def validate_columns(df: pd.DataFrame, required: set[str], name: str):
+def validate_columns(df: pd.DataFrame, required: set[str], name: str) -> None:
     if not required.issubset(df.columns):
         missing = sorted(required - set(df.columns))
         sys.exit(f"{name} mist kolommen: {missing}")

@@ -106,7 +106,7 @@ def build_schedule(
     matches_df: pd.DataFrame,
     players_df: pd.DataFrame,
     distances_df: pd.DataFrame,
-):
+) -> tuple[pd.DataFrame, pd.DataFrame]:
     matches_df["date"] = [
         mkdate(y, m, d)
         for y, m, d in zip(

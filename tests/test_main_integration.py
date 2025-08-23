@@ -8,7 +8,7 @@ import task_planner.__main__ as main
 from pytest import MonkeyPatch
 
 
-def test_full_flow_with_templates(tmp_path: Path):
+def test_full_flow_with_templates(tmp_path: Path) -> None:
     args = SimpleNamespace(
         taken="templates/taken.csv",
         wedstrijden="templates/wedstrijden.csv",
@@ -25,7 +25,9 @@ def test_full_flow_with_templates(tmp_path: Path):
     assert "Statistiek" in wb.sheetnames
 
 
-def test_main_invokes_run_with_args(monkeypatch: MonkeyPatch, tmp_path: Path):
+def test_main_invokes_run_with_args(
+    monkeypatch: MonkeyPatch, tmp_path: Path
+) -> None:
     out_file = tmp_path / "schema.xlsx"
     argv = [
         "prog",

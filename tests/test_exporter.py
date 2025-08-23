@@ -5,7 +5,7 @@ import pandas as pd
 from task_planner import exporter
 
 
-def test_export_excel_creates_file(tmp_path: Path):
+def test_export_excel_creates_file(tmp_path: Path) -> None:
     schedule_df = pd.DataFrame(
         [
             {

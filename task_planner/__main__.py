@@ -31,10 +31,10 @@ def run_with_args(args: argparse.Namespace) -> str:
         out_path=args.uitvoer,
     )
 
-    return args.uitvoer
+    return str(args.uitvoer)
 
 
-def main():
+def main() -> None:
     parser = argparse.ArgumentParser(
         description=f"{HOME_TEAM_NAME} taakplanner"
     )

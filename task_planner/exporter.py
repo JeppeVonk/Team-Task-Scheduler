@@ -14,7 +14,7 @@ except ImportError as err:
 from .utils import hashed_color_hex, to_int
 
 
-def autosize_columns(ws: Worksheet):
+def autosize_columns(ws: Worksheet) -> None:
     for col in ws.columns:
         max_length = max(
             (len(str(cell.value)) if cell.value else 0) for cell in col
@@ -31,7 +31,7 @@ def export_excel(
     stats_df: pd.DataFrame,
     players: list[str],
     out_path: str,
-):
+) -> None:
     wb = openpyxl.Workbook()
     ws = wb.active
     assert isinstance(ws, Worksheet)
@@ -86,7 +86,8 @@ def export_excel(
         ws2.cell(row=1, column=j).font = bold
         ws2.cell(row=1, column=j).alignment = center
     for _, r in stats_df.iterrows():
-        ws2.append(list(r.values))
+        ws2.append(list(r.values))  # TODO: Might want to sort this list somehow
     autosize_columns(ws2)
 
-    wb.save(out_path)
+    # TODO: Catch PermissionError (most likely have excel open with same file)
+    wb.save(out_path)  # TODO: Might want to use Path object

@@ -22,7 +22,7 @@ def hashed_color_hex(name: str) -> str:
     return f"{r:02X}{g:02X}{b:02X}"
 
 
-def shuffle_players(players: list[str], seed: int = RANDOM_SEED):
+def shuffle_players(players: list[str], seed: int = RANDOM_SEED) -> list[str]:
     rnd = random.Random(seed)
     rnd.shuffle(players)
     return players

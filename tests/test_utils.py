@@ -10,37 +10,37 @@ from task_planner.utils import (
 )
 
 
-def test_parse_bool_ja_nee_true_cases():
+def test_parse_bool_ja_nee_true_cases() -> None:
     for v in ["ja", "JA", "y", "Yes", "1", "true"]:
         assert parse_bool_ja_nee(v)
 
 
-def test_parse_bool_ja_nee_false_cases():
+def test_parse_bool_ja_nee_false_cases() -> None:
     for v in ["nee", "n", "0", "false", "onzin"]:
         assert not parse_bool_ja_nee(v)
 
 
-def test_mkdate_returns_date():
+def test_mkdate_returns_date() -> None:
     d = mkdate("2025", "9", "7")
     assert isinstance(d, date)
     assert d == date(2025, 9, 7)
 
 
-def test_to_int_from_int_and_str():
+def test_to_int_from_int_and_str() -> None:
     assert to_int(5) == 5
     assert to_int("42") == 42
     with pytest.raises(TypeError):
         to_int(3.14)
 
 
-def test_hashed_color_hex_format():
+def test_hashed_color_hex_format() -> None:
     color = hashed_color_hex("Jan")
     assert isinstance(color, str)
     assert len(color) == 6
     int(color, 16)  # moet parsebaar zijn als hex
 
 
-def test_shuffle_players_deterministic():
+def test_shuffle_players_deterministic() -> None:
     players = ["A", "B", "C", "D"]
     shuffled1 = shuffle_players(players.copy(), seed=123)
     shuffled2 = shuffle_players(players.copy(), seed=123)

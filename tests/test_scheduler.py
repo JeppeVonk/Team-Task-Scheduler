@@ -3,7 +3,7 @@ import pytest
 from task_planner import models, scheduler
 
 
-def test_choose_candidates_filters_and_orders():
+def test_choose_candidates_filters_and_orders() -> None:
     players = ["Jan", "Piet"]
     stats = {p: models.PlayerStats.empty(["Rijden"]) for p in players}
     preferences = {
@@ -16,7 +16,7 @@ def test_choose_candidates_filters_and_orders():
     assert result == ["Jan"]
 
 
-def test_assign_for_week_raises_when_no_candidates():
+def test_assign_for_week_raises_when_no_candidates() -> None:
     players = ["Jan"]
     stats = {p: models.PlayerStats.empty(["Fluiten"]) for p in players}
     preferences = {"Jan": {"Fluiten": 0}}
@@ -26,7 +26,7 @@ def test_assign_for_week_raises_when_no_candidates():
         )
 
 
-def test_build_schedule_minimal():
+def test_build_schedule_minimal() -> None:
     tasks_df = pd.DataFrame(
         [
             {"taak": "Rijden", "scope": "uit", "aantal": 1},
