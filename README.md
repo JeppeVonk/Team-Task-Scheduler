@@ -326,7 +326,8 @@ Geen paniek: dit is eenvoudig op te lossen.
 
 ### 👣 Snelle oplossing
 
-1. Sluit terminal/computer volledig af en open opnieuw.
+1. Sluit terminal/computer volledig af en open opnieuw.  
+   ❗ **Let op:** Iedere keer dat je de terminal opnieuw opstart, moet je de Conda-omgeving ook opnieuw activeren, d.m.v. `conda activate team-tasks`.
 2. Voer uit:
 
    ```bash
