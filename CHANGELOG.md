@@ -1,3 +1,9 @@
+## v0.2.9 (2025-08-23)
+
+### Fix
+
+- **ci**: improve dependency installation and pre-commit setup
+
 ## v0.2.8 (2025-08-23)
 
 ### Fix
