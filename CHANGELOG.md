@@ -1,3 +1,9 @@
+## v0.2.8 (2025-08-23)
+
+### Fix
+
+- **mypy**: add missing type annotations and return hints
+
 ## v0.2.7 (2025-08-23)
 
 ### Fix
