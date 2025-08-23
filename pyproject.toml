@@ -81,7 +81,6 @@ ignore_missing_imports = true
 namespace_packages = true
 show_error_code_links = true
 pretty = true
-explicit_package_bases = true
 mypy_path = "task_planner"
 
 [tool.black]
