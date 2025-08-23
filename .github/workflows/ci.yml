@@ -28,6 +28,16 @@ jobs:
         with:
           python-version: ${{ env.PYTHON_VERSION }}
 
+      - name: Debug Python environment after setup
+        run: |
+          echo "System Python versions:"
+          python --version
+          python3 --version
+          which python
+          which python3
+          echo "Setup-python absolute path:"
+          echo "${{ steps.setup-python.outputs.python-path }}"
+
       # TODO: Optional: Cache Poetry installation (~10s saved on average)
       #       Example: https://github.com/snok/install-poetry#caching-the-poetry-installation
       - name: Load cached Poetry installation
@@ -40,14 +50,27 @@ jobs:
       - name: Install Poetry
         if: steps.cached-poetry.outputs.cache-hit != 'true'
         uses: snok/install-poetry@v1
+        with:
+          version: ${{ env.POETRY_VERSION }}
+
+      - name: Debug Poetry installation
+        run: |
+          poetry --version
+          which poetry
 
       - name: Set Poetry to use in-project virtualenv (.venv folder)
         run: |
           poetry config virtualenvs.create true --local
           poetry config virtualenvs.in-project true --local
 
-      # - name: Tell Poetry to use the runner's Python
-      #   run: poetry env use "${{ steps.setup-python.outputs.python-path }}"
+      - name: Tell Poetry to use the runner's Python
+        run: poetry env use "${{ steps.setup-python.outputs.python-path }}"
+
+      - name: Debug Poetry environment
+        run: |
+          poetry env info
+          poetry run python --version
+          poetry run which python
 
       - name: Cache virtual environment
         id: cached-deps
@@ -66,6 +89,11 @@ jobs:
       - name: Install dependencies
         if: steps.cached-deps.outputs.cache-hit != 'true'
         run: poetry install --with dev,test
+
+      - name: Debug after dependency install
+        run: |
+          poetry run python --version
+          poetry run pip list | head -20
 
       # TODO: Might want to run Black, Ruff & Mypy separately instead of using pre-commit
       # TODO: Might want to cache pre-commit
