@@ -1,3 +1,9 @@
+## v0.2.6 (2025-08-23)
+
+### Fix
+
+- **pre-commit**: add missing newline in .vscode/extensions.json
+
 ## v0.2.5 (2025-08-23)
 
 ### Fix
