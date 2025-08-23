@@ -23,6 +23,7 @@ De uitkomsten worden automatisch in **Excel** gezet: een schema + statistieken.
 8. [📜 Licentie](#-licentie)
 9. [🤝 Bijdragen](#-bijdragen)
 10. [📌 Toekomstige uitbreidingen](#-toekomstige-uitbreidingen)
+11. [🚑 Problemen oplossen met Poetry](#-problemen-oplossen-met-poetry)
 
 ---
 
@@ -39,10 +40,10 @@ De uitkomsten worden automatisch in **Excel** gezet: een schema + statistieken.
 - Kleurtjes per speler voor snel overzicht
 - Extra **statistiek-tabblad** in Excel (per speler en per taak)
 - Werkt met eenvoudige **CSV-bestanden** (Excel-bestanden die je opslaat als `CSV`):
-  - `taken.csv` → lijst met taken
-  - `wedstrijden.csv` → wedstrijdschema
-  - `spelers.csv` → spelersnamen en voorkeuren
-  - `afstanden.csv` → afstanden naar clubs
+  - [`taken.csv`](templates/taken.csv) → lijst met taken
+  - [`wedstrijden.csv`](templates/wedstrijden.csv) → wedstrijdschema
+  - [`spelers.csv`](templates/spelers.csv) → spelersnamen en voorkeuren
+  - [`afstanden.csv`](templates/afstanden.csv) → afstanden naar clubs
 
 ---
 
@@ -58,7 +59,8 @@ Team-Task-Scheduler/
 └── tests/               ← automatische controles (niet nodig voor gebruik)
 ```
 
-De map **`templates/`** bevat voorbeelden die je kunt kopiëren en invullen met je eigen teaminformatie.
+> [!TIP]
+> De map [**`templates/`**](templates/) bevat voorbeelden die je kunt kopiëren en invullen met je eigen teaminformatie.
 
 ---
 
@@ -67,87 +69,80 @@ De map **`templates/`** bevat voorbeelden die je kunt kopiëren en invullen met 
 Voor het gebruik heb je **Python** nodig.  
 Wij raden **Conda** aan, omdat dat het eenvoudigst is en overal werkt.
 
-1. **Installeer Conda**
+### 1. Installeer Conda
 
-   - Download: [Miniconda](https://www.anaconda.com/docs/getting-started/miniconda)  
-   - Volg de installatiehandleiding voor jouw computer.
+- Download: [Miniconda](https://www.anaconda.com/docs/getting-started/miniconda)  
+- Volg de installatiehandleiding voor jouw computer.
 
-2. **Haal het project binnen**
+### 2. Haal het project binnen
 
-   - Als je het project als `.zip` hebt gedownload:
-     - Pak het bestand uit (rechtermuisknop → "Alles uitpakken").
-     - Je krijgt een map zoals `Team-Task-Scheduler/`.
+- Als je het project als `.zip` hebt gedownload:
 
-   - Als je **Git** hebt geïnstalleerd:
+  - Pak het bestand uit (rechtermuisknop → "Alles uitpakken").
+  - Je krijgt een map zoals `Team-Task-Scheduler/` of `Team-Task-Scheduler-main/`.
 
-     ```bash
-     git clone https://github.com/jouw-gebruikersnaam/Team-Task-Scheduler.git
-     ```
+- Als je **Git** hebt geïnstalleerd:
 
-     Ook dan krijg je een map `Team-Task-Scheduler/`.
+  ```bash
+  git clone https://github.com/jouw-gebruikersnaam/Team-Task-Scheduler.git
+  ```
 
-   👉 Onthoud waar deze map staat, want je moet er in de volgende stappen naartoe gaan.
+> [!TIP]
+> Onthoud waar deze map staat, want je moet er in de volgende stappen naartoe gaan.
 
-3. **Maak een nieuwe omgeving voor dit project**  
-   Open een terminal/Anaconda Prompt en voer uit:
+### 3. Maak een nieuwe omgeving voor dit project  
 
-   ```bash
-   conda create -n team-tasks python=3.13
-   ```
+Open een terminal/Anaconda Prompt en voer uit:
 
-   ```bash
-   conda activate team-tasks
-   ```
+```bash
+conda create -n team-tasks python=3.13
+```
 
-4. **Installeer de benodigde hulpmiddelen**
+```bash
+conda activate team-tasks
+```
 
-   ```bash
-   conda install conda-forge::pipx
-   ```
+### 4. Installeer de benodigde hulpmiddelen
 
-   ```bash
-   pipx install poetry
-   ```
+```bash
+conda install conda-forge::pipx
+```
 
-   <!-- TODO: Figure out why poetry is not always added to the PATH, thus causing a fail during `poetry install` -->
+```bash
+pipx ensurepath
+```
 
-5. **Installeer het project zelf**  
-   Ga in de terminal eerst naar de projectmap:
+```bash
+pipx install poetry
+```
 
-   ```bash
-   cd pad/naar/Team-Task-Scheduler
-   ```
+> [!WARNING]
+> Soms wordt `pipx` of `poetry` niet meteen herkend.  
+> Zie de sectie [🚑 Problemen oplossen met Poetry](#-problemen-oplossen-met-poetry) als je een foutmelding krijgt zoals *“poetry not found”*.
 
-   🔎 **Tip:** twijfel je of je in de juiste map zit?  
-   Typ in de terminal:
+### 5. Installeer het project zelf  
 
-   - macOS/Linux:
+Ga in de terminal naar de projectmap:
 
-     ```bash
-     ls
-     ```
+```bash
+cd pad/naar/Team-Task-Scheduler
+```
 
-   - Windows:
+```bash
+poetry install
+```
 
-     ```bash
-     dir
-     ```
+> [!TIP]
+> Twijfel je of je in de juiste map zit?  
+> Typ `ls` (macOS/Linux) of `dir` (Windows) en controleer dat `README.md`, `task_planner/` en `templates/` zichtbaar zijn.
 
-   Je zou o.a. `README.md`, `task_planner/` en `templates/` moeten zien, net als in het voorbeeld hierboven.
-
-   Voer daarna uit:
-
-   ```bash
-   poetry install
-   ```
-
-👉 Klaar! Je hoeft dit maar één keer te doen. Daarna kun je steeds direct naar **Gebruik** springen.
+👉 Klaar! Je hoeft dit maar één keer te doen. Daarna kun je steeds direct naar [**Gebruik**](#-gebruik-het-schema-maken) springen.
 
 ---
 
 ## 🏃 Gebruik (het schema maken)
 
-1. Kopieer de map **`templates/`** naar een eigen werkmap, bijvoorbeeld:
+1. Kopieer de map [**`templates/`**](templates/) naar een eigen werkmap, bijvoorbeeld:
 
    ```txt
    mijn-team/
@@ -157,32 +152,29 @@ Wij raden **Conda** aan, omdat dat het eenvoudigst is en overal werkt.
    └── afstanden.csv
    ```
 
-2. Vul de bestanden in met jullie teaminformatie (zie hieronder voor uitleg).
+   <!-- TODO: Misschien een `cp` uitleg of een verkenner uitleg over kopieren -->
 
-3. **Ga naar je werkmap en activeer Conda**  
-   - Open **Anaconda Prompt** (Windows) of een terminal (Mac/Linux).
-   - Navigeer naar de map waar je de bestanden hebt gezet, bijvoorbeeld:
+2. Vul de bestanden in met jullie teaminformatie (zie [📝 Hoe vul je de bestanden in?](#-hoe-vul-je-de-bestanden-in)).
 
-     ```bash
-     cd pad/naar/mijn-team/
-     ```
+3. Activeer de Conda-omgeving in je werkmap:
 
-   - Controleer of je in de juiste map zit:
+   ```bash
+   cd pad/naar/mijn-team/
+   ```
 
-     ```bash
-     ls   # macOS/Linux
-     dir  # Windows
-     ```
+   ```bash
+   conda activate team-tasks
+   ```
 
-     Je zou hier de bestanden `taken.csv`, `spelers.csv`, `wedstrijden.csv`, `afstanden.csv` moeten zien.
+   > [!TIP]
+   > Controleer dat je bestanden `taken.csv`, `spelers.csv`, `wedstrijden.csv`, `afstanden.csv` in de map staan.
+   >
+   > ```bash
+   > ls   # macOS/Linux
+   > dir  # Windows
+   > ```
 
-   - Activeer de Conda-omgeving:
-
-     ```bash
-     conda activate team-tasks
-     ```
-
-4. **Draai het programma**  
+4. Draai het programma:
 
    ```bash
    poetry run task_planner \
@@ -194,6 +186,7 @@ Wij raden **Conda** aan, omdat dat het eenvoudigst is en overal werkt.
    ```
 
 5. Open **`schema.xlsx`** in Excel → daarin staan:
+
    - **Schema-tabblad** → alle wedstrijden en wie welke taak doet
    - **Statistiek-tabblad** → overzicht per speler en kilometerverdeling
 
@@ -201,7 +194,7 @@ Wij raden **Conda** aan, omdat dat het eenvoudigst is en overal werkt.
 
 ## 📝 Hoe vul je de bestanden in?
 
-### `taken.csv` – Takenlijst
+### [`taken.csv`](templates/taken.csv) – Takenlijst
 
 | taak       | scope  | aantal |
 | ---------- | ------ | ------ |
@@ -216,7 +209,7 @@ Wij raden **Conda** aan, omdat dat het eenvoudigst is en overal werkt.
 
 ---
 
-### `spelers.csv` – Spelers en voorkeuren
+### [`spelers.csv`](templates/spelers.csv) – Spelers en voorkeuren
 
 | naam           | displaynaam | Materialen | Hesjes | Rijden | Fluiten | Bar |
 | -------------- | ----------- | ---------- | ------ | ------ | ------- | --- |
@@ -233,7 +226,7 @@ Wij raden **Conda** aan, omdat dat het eenvoudigst is en overal werkt.
 
 ---
 
-### `wedstrijden.csv` – Wedstrijdschema
+### [`wedstrijden.csv`](templates/wedstrijden.csv) – Wedstrijdschema
 
 | jaar | maand | dag | club    | team    | isUit |
 | ---- | ----- | --- | ------- | ------- | ----- |
@@ -244,12 +237,12 @@ Wij raden **Conda** aan, omdat dat het eenvoudigst is en overal werkt.
 
 ---
 
-### `afstanden.csv` – Afstanden naar clubs
+### [`afstanden.csv`](templates/afstanden.csv) – Afstanden naar clubs
 
-| club      | afstand_km |
-| --------- | ---------- |
-| Nieuwkoop | 45         |
-| Soest     | 80         |
+| club      | afstand\_km |
+| --------- | ----------- |
+| Nieuwkoop | 45          |
+| Soest     | 80          |
 
 - Afstand = **enkele reis in kilometers**
 
@@ -259,12 +252,17 @@ Wij raden **Conda** aan, omdat dat het eenvoudigst is en overal werkt.
 
 **Schema-tabblad (Excel):**
 
+![Schema-tabblad (Excel)](.github/schema-tabblad-vb.png)
+
+**Schema-tabblad (Markdown):**
+
 | Datum      | Tegenstander | Uit/Thuis | Materialen 1 | Materialen 2 | Hesjes 1 | Rijden 1 | Rijden 2 | Rijden 3 | Rijden 4 | Fluiten 1 | Fluiten 2 | Bar 1 | Bar 2 |
 | ---------- | ------------ | --------- | ------------ | ------------ | -------- | -------- | -------- | -------- | -------- | --------- | --------- | ----- | ----- |
 | 2025-09-07 | Myra         | Thuis     | Rick         | Martijn      | Jan      |          |          |          |          | Bram      | Koen      | Dirk  | Piet  |
 | 2025-09-14 | Overbos      | Uit       | Jasper       | Thomas       | Niels    | Luuk     | Bas      | Henk     | Arjan    |           |           |       |       |
 
-👉 Daarnaast is er een **Statistiek-tabblad** met per speler hoeveel taken en kilometers ze hebben gedaan.
+> [!NOTE]
+> Daarnaast is er een **Statistiek-tabblad** met per speler hoeveel taken en kilometers ze hebben gedaan.
 
 ---
 
@@ -310,3 +308,111 @@ We gebruiken [Conventional Commits](https://www.conventionalcommits.org/) en pre
 
 - [ ] Afstanden automatisch ophalen via een API
 - [ ] Export naar extra formaten (bijv. PDF naast Excel)
+
+---
+
+## 🚑 Problemen oplossen met Poetry
+
+Soms werkt `poetry` niet meteen nadat je het hebt geïnstalleerd met `pipx`.  
+Je krijgt dan een melding zoals:
+
+```bash
+poetry: command not found
+# of in Windows:
+'poetry' is not recognized as an internal or external command
+```
+
+Dat komt doordat de map waar `pipx` programma’s neerzet nog niet aan je **PATH** is toegevoegd.  
+Geen paniek: dit is eenvoudig op te lossen.
+
+### 👣 Snelle oplossing
+
+1. Sluit terminal/computer volledig af en open opnieuw.
+2. Voer uit:
+
+   ```bash
+   pipx ensurepath
+   ```
+
+3. Sluit terminal/computer volledig af en open opnieuw.
+4. Test:
+
+   ```bash
+   poetry --version
+   ```
+
+Ga nu verder met de volgende stap in [⚙️ Installatie (eenmalig instellen)](#️-installatie-eenmalig-instellen).
+
+> [!TIP]
+> Zie onderstaande secties voor platform-specifieke instructies als het nog niet werkt.
+
+---
+
+### 🪟 Windows
+
+1. Controleer waar pipx programma’s heeft neergezet:
+
+   ```bash
+   pipx list
+   ```
+
+   > [!NOTE]
+   > Zoek de regel: `apps are exposed on your PATH at C:\Users\JOUWNAAM\.local\bin`
+
+2. Voeg dit pad toe aan je PATH via **Instellingen → Systeem → Info → Geavanceerde systeeminstellingen → Geavanceerd → Omgevingsvariabelen → Gebruikersvariabelen → Path → Bewerken → Nieuw**.
+3. Sluit terminal/computer volledig af en open opnieuw, test met:
+
+   ```bash
+   poetry --version
+   ```
+
+---
+
+###  macOS
+
+1. Voer uit:
+
+   ```bash
+   pipx ensurepath
+   ```
+
+2. Voeg eventueel toe aan je shell-profiel:
+
+   ```bash
+   echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.zshrc
+   source ~/.zshrc
+   ```
+
+3. Sluit terminal/computer volledig af en open opnieuw, test met:
+
+   ```bash
+   poetry --version
+   ```
+
+---
+
+### 🐧 Linux
+
+Zelfde als macOS, maar voeg toe aan `~/.bashrc` of `~/.zshrc`:
+
+```bash
+echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc
+source ~/.bashrc
+```
+
+---
+
+### 🆘 Noodoplossingen
+
+- Herstart computer en terminal.
+- Controleer dat de juiste Conda-omgeving actief is:
+
+  ```bash
+  conda activate team-tasks
+  ```
+
+- Tijdelijk via pipx run:
+
+  ```bash
+  pipx run --spec poetry poetry install
+  ```
