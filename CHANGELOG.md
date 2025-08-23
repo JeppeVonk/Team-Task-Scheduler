@@ -1,3 +1,9 @@
+## v0.2.7 (2025-08-23)
+
+### Fix
+
+- **mypy**: remove explicit_package_bases to avoid duplicate __main__ error
+
 ## v0.2.6 (2025-08-23)
 
 ### Fix
