@@ -96,6 +96,7 @@ jobs:
           poetry run python --version
           poetry run pip list | head -20
 
+      # TODO: Might want to cache pre-commit hooks
       - name: Run pre-commit hooks
         run: poetry run pre-commit run --all-files --show-diff-on-failure --color=always
 
