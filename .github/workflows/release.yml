@@ -28,7 +28,7 @@ jobs:
         with:
           fetch-depth: 0
           token: "${{ secrets.GITHUB_TOKEN }}"
-      
+
       # TODO: Might not even need Python install when using commitizen action
       - name: Set up Python
         id: setup-python
@@ -36,17 +36,47 @@ jobs:
         with:
           python-version: ${{ env.PYTHON_VERSION }}
 
-      # TODO: Optional: Cache Poetry installation (~10s saved on average)
-      #       Example: https://github.com/snok/install-poetry#caching-the-poetry-installation
-      - name: Install Poetry
-        uses: abatilo/actions-poetry@v4
+      - name: Debug Python environment after setup
+        run: |
+          echo "System Python versions:"
+          python --version
+          python3 --version
+          which python
+          which python3
+          echo "Setup-python absolute path:"
+          echo "${{ steps.setup-python.outputs.python-path }}"
+
+      - name: Load cached Poetry installation
+        id: cached-poetry
+        uses: actions/cache@v4
         with:
-          poetry-version: ${{ env.POETRY_VERSION }}
+          path: ~/.local
+          key: poetry-${{ env.POETRY_VERSION }}
+
+      - name: Install Poetry
+        if: steps.cached-poetry.outputs.cache-hit != 'true'
+        uses: snok/install-poetry@v1
+        with:
+          version: ${{ env.POETRY_VERSION }}
+
+      - name: Debug Poetry installation
+        run: |
+          poetry --version
+          which poetry
 
       - name: Set Poetry to use in-project virtualenv (.venv folder)
         run: |
           poetry config virtualenvs.create true --local
           poetry config virtualenvs.in-project true --local
+
+      - name: Tell Poetry to use the runner's Python
+        run: poetry env use "${{ steps.setup-python.outputs.python-path }}"
+
+      - name: Debug Poetry environment
+        run: |
+          poetry env info
+          poetry run python --version
+          poetry run which python
 
       - name: Cache virtual environment
         id: cached-deps
@@ -65,6 +95,11 @@ jobs:
       - name: Install dependencies
         if: steps.cached-deps.outputs.cache-hit != 'true'
         run: poetry install --with dev
+
+      - name: Debug after dependency install
+        run: |
+          poetry run python --version
+          poetry run pip list | head -20
 
       - name: Bump version and create changelog
         id: cz

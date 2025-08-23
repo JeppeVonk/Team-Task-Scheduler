@@ -38,14 +38,12 @@ jobs:
           echo "Setup-python absolute path:"
           echo "${{ steps.setup-python.outputs.python-path }}"
 
-      # TODO: Optional: Cache Poetry installation (~10s saved on average)
-      #       Example: https://github.com/snok/install-poetry#caching-the-poetry-installation
       - name: Load cached Poetry installation
         id: cached-poetry
         uses: actions/cache@v4
         with:
-          path: ~/.local  # the path depends on the OS
-          key: poetry-0  # increment to reset cache
+          path: ~/.local
+          key: poetry-${{ env.POETRY_VERSION }}
 
       - name: Install Poetry
         if: steps.cached-poetry.outputs.cache-hit != 'true'
@@ -95,8 +93,6 @@ jobs:
           poetry run python --version
           poetry run pip list | head -20
 
-      # TODO: Might want to run Black, Ruff & Mypy separately instead of using pre-commit
-      # TODO: Might want to cache pre-commit
       - name: Run pre-commit hooks
         run: poetry run pre-commit run --all-files --show-diff-on-failure --color=always
 
