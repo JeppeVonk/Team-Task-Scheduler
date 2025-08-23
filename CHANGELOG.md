@@ -1,3 +1,9 @@
+## v0.2.5 (2025-08-23)
+
+### Fix
+
+- **pre-commit**: resolve pre-commit formatting errors
+
 ## v0.2.4 (2025-08-22)
 
 ### Fix
